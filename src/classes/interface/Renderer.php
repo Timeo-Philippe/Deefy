@@ -1,6 +1,6 @@
 <?php
 
-namespace iutnc\deefy\render;
+namespace iutnc\deefy\interface;
 
 interface Renderer
 {

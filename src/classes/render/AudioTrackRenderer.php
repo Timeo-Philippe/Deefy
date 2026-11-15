@@ -3,7 +3,7 @@
 namespace iutnc\deefy\render;
 
 use iutnc\deefy\audio\tracks\AudioTrack;
-use iutnc\deefy\render\Renderer;
+use iutnc\deefy\interface\Renderer;
 use InvalidArgumentException;
 
 class AudioTrackRenderer implements Renderer

@@ -3,7 +3,7 @@
 namespace iutnc\deefy\render;
 
 use iutnc\deefy\audio\lists\AudioList;
-use iutnc\deefy\render\Renderer;
+use iutnc\deefy\interface\Renderer;
 
 class AudioListRenderer implements Renderer
 {

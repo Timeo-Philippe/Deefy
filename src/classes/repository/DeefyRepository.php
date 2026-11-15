@@ -5,10 +5,11 @@ namespace iutnc\deefy\repository;
 use PDO;
 use PDOException;
 use Exception;
+use iutnc\deefy\audio\lists\Playlist;
 
-class TouiterRepository
+class DeefyRepository
 {
-    private static ?TouiterRepository $instance = null;
+    private static ?DeefyRepository $instance = null;
     private static array $config = [];
 
     private PDO $db;
@@ -58,10 +59,10 @@ class TouiterRepository
     /**
      * Retourne l’instance unique du Repository (singleton)
      */
-    public static function getInstance(): TouiterRepository
+    public static function getInstance(): DeefyRepository
     {
         if (self::$instance === null) {
-            self::$instance = new TouiterRepository();
+            self::$instance = new DeefyRepository();
         }
 
         return self::$instance;
@@ -73,5 +74,23 @@ class TouiterRepository
     public function getPDO(): PDO
     {
         return $this->db;
+    }
+
+    /**
+     * Fonctionnalité 1 : affiche la liste des playlists enregistrées en base de données
+     */
+    public function afficher_liste_playlist(): array 
+    {
+        $query = "SELECT p.* 
+                  FROM playlist p ";
+        $stmt = $this->getPDO()->prepare($query);
+        $stmt->execute();
+
+        $playlist = [];
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $playlist[] = new Playlist($row['nom']);
+        }
+
+        return $playlist;
     }
 }

@@ -39,13 +39,59 @@ class Dispatcher
         <html lang="fr">
             <head>
                 <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>Deefy</title>
             </head>
+            <style>
+                body {
+                  margin: 0;
+                  padding: 0;
+                  background-color: #000d26; 
+                }
+
+                h1,h2,h3, p {
+                  margin: 10px;
+                  color : white;
+                  font-family: monospace, sans-serif;
+                }
+
+                .navbar {
+                  list-style-type: none;
+                  margin: 0;
+                  padding: 0;
+                  overflow: hidden;
+                  background-color: #430261;
+                }
+
+                .navbar li {
+                  float: left;
+                  margin-right: 20px;
+                  
+                }
+
+                .navbar li h2 {
+                  color: white;
+                  font-family: monospace, sans-serif;
+                }
+  
+                .navbar li a {
+                  display: block;
+                  color: white;
+                  text-align: center;
+                  padding: 14px 16px;
+                  text-decoration: none;
+                  font-family: monospace, sans-serif;
+                }
+
+                .navbar h1{
+                color: white;
+                text-align: center;
+                }
+            </style>
             <body>
-                <h1>Deefy</h1>
-                <ul>
-                    <li><a href="?action=display">Afficher la playlist</a></li>
+                <ul class='navbar'>
+                    <h1>Deefy</h1>
+                    <li><a href='?action=default'>Accueil</a></li>
+                    <li><a href="?action=afficher-Playlist">Afficher les playlist</a></li>
                     <li><a href="?action=add-user">Inscription</a></li>
                     <li><a href="?action=add-playlist">Ajouter une playlist</a></li>
                 </ul>
