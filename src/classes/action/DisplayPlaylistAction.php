@@ -2,16 +2,15 @@
 
 namespace iutnc\deefy\action;
 
-use Override;
 use iutnc\deefy\render\AudioListRenderer;
-use iutnc\deefy\render\Renderer;
 
 
-class displayPlaylistAction extends Action {
+class displayPlaylistAction extends Action
+{
 
-    #[Override]
-    public function execute(): string {
-        if(! isset ($_SESSION['playlist'])){
+    public function execute(): string
+    {
+        if (! isset($_SESSION['playlist'])) {
             $html = "<b>pas de playlist en session</b>";
         } else {
             $pl = unserialize($_SESSION['playlist']);

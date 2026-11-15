@@ -5,9 +5,9 @@ namespace iutnc\deefy\action;
 use iutnc\deefy\audio\lists\Playlist;
 use iutnc\deefy\render\AudioListRenderer;
 
-
 class AddPlaylistAction extends Action
 {
+
     public function execute(): string
     {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {

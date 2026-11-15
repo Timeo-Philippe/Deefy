@@ -6,11 +6,12 @@ use iutnc\deefy\action\Action;
 use iutnc\deefy\audio\tracks\PodcastTrack;
 use iutnc\deefy\render\AudioListRenderer;
 
-class AddPodcastTrackAction extends Action {
+class AddPodcastTrackAction extends Action
+{
 
     public function execute(): string
     {
-        if($_SERVER['REQUEST_METHOD'] === 'GET'){
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $html = '<form method="post" action="?action=add-track" enctype="multipart/form-data">
                         <input type="text" name="name" placeholder="Nom de la piste">
                         <input type="file" name="userfile">
@@ -18,7 +19,7 @@ class AddPodcastTrackAction extends Action {
                      </form>';
             return $html;
         } else {
-            if (substr($_FILES['userfile']['name'],-4) === '.mp3' && $_FILES['userfile']['type'] === 'audio/mpeg') {
+            if (substr($_FILES['userfile']['name'], -4) === '.mp3' && $_FILES['userfile']['type'] === 'audio/mpeg') {
                 $nomFichier = uniqid() . '.mp3';
                 move_uploaded_file($_FILES['userfile']['tmp_name'], 'audio/' . $nomFichier);
                 $pl = unserialize($_SESSION['playlist']);

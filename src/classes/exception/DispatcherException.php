@@ -2,5 +2,4 @@
 
 namespace iutnc\deefy\exception;
 
-class DispatcherException extends \Exception {
-}
+class DispatcherException extends \Exception {}

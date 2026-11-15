@@ -2,5 +2,4 @@
 
 namespace iutnc\deefy\exception;
 
-class InvalidPropertyValueException extends \Exception {
-}
+class InvalidPropertyValueException extends \Exception {}
