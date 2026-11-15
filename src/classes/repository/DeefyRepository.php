@@ -6,6 +6,8 @@ use PDO;
 use PDOException;
 use Exception;
 use iutnc\deefy\audio\lists\Playlist;
+use iutnc\deefy\audio\tracks;
+use iutnc\deefy\audio\tracks\AudioTrack;
 
 class DeefyRepository
 {
@@ -79,7 +81,7 @@ class DeefyRepository
     /**
      * Fonctionnalité 1 : affiche la liste des playlists enregistrées en base de données
      */
-    public function afficher_liste_playlist(): array 
+    public function afficher_liste_playlist(): array
     {
         $query = "SELECT p.* 
                   FROM playlist p ";
@@ -87,10 +89,43 @@ class DeefyRepository
         $stmt->execute();
 
         $playlist = [];
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $playlist[] = new Playlist($row['nom']);
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $playlist[] = [
+                'id' => $row['id'],
+                'playlist' => new Playlist($row['nom'])
+            ];
         }
 
         return $playlist;
+    }
+
+    /**
+     * Fonctionnalité 2 :  chaque élément de la liste est cliquable et permet d’afficher une 
+     * playlist qui devient la playlist courante stockée en session
+     */
+    public function afficher_playlist(int $id): ?Playlist
+    {
+        $query = "SELECT p.id, p.nom, t.*
+                  FROM playlist p
+                  INNER JOIN playlist2track p2t on p.id = p2t.id_pl
+                  INNER JOIN track t on p2t.id_track = t.id
+                  WHERE p.id = ?
+                  ORDER BY p2t.no_piste_dans_liste";
+        $stmt = $this->getPDO()->prepare($query);
+        $stmt->bindParam(1, $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $pl = null;
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            if ($pl === null) {
+                $pl = new Playlist($row['nom']);
+            }
+
+            $track = new AudioTrack($row['titre'], $row['filename'], (int)$row['duree']);
+            $pl->ajoutPiste($track);
+        }
+
+
+        return $pl;
     }
 }

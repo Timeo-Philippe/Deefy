@@ -14,10 +14,14 @@ class AudioTrack
     private int $duree;
     protected string $nomFichierAudio;
 
-    public function __construct(string $titreP, string $cheminFichier)
+    public function __construct(string $titreP, string $cheminFichier, int $duree)
     {
         $this->titre = $titreP;
         $this->nomFichierAudio = $cheminFichier;
+        if ($duree < 0) {
+            throw new InvalidPropertyValueException("duree cannot be negative");
+        }
+        $this->duree = $duree;
     }
 
     public function __toString()
