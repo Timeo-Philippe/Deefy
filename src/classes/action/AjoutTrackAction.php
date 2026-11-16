@@ -21,14 +21,31 @@ class AjoutTrackAction extends Action
                      </form>';
             return $html;
         } else {
+
+            if (!isset($_SESSION['id_playlist'])) {
+                return "Aucune playlist sélectionnée";
+            }
+
             $repo = DeefyRepository::getInstance();
-            if (substr($_FILES['userfile']['name'], -4) === '.mp3' && $_FILES['userfile']['type'] === 'audio/mpeg') {
+
+            if ($_FILES['userfile']['error'] !== 0) {
+                return "erreur lors de l'envoie du fichier";
+            }
+
+            if (strtolower(substr($_FILES['userfile']['name'], -4)) === '.mp3' && $_FILES['userfile']['type'] === 'audio/mpeg') {
                 $nomFichier = uniqid() . '.mp3';
-                move_uploaded_file($_FILES['userfile']['tmp_name'], 'audio/' . $nomFichier);
-                $titre = pathinfo($_FILES['userfile']['name'], PATHINFO_FILENAME);
-                $duree = (int) $_POST['minutes'] * 60 + (int) $_POST['secondes'];
-                $idTrack = $repo->ajoutPiste($titre, 'audio/' . $nomFichier, $duree);
-                $repo->ajoutPisteAPlaylist($_SESSION['id_playlist'], $idTrack);
+
+                if ($_POST['minutes'] < 0 || $_POST['secondes'] < 0 || $_POST['secondes'] > 59) {
+                    return "durée incorrecte";
+                }
+
+                if (move_uploaded_file($_FILES['userfile']['tmp_name'], 'audio/' . $nomFichier) === true) {
+                    $titre = pathinfo($_FILES['userfile']['name'], PATHINFO_FILENAME);
+
+                    $duree = (int) $_POST['minutes'] * 60 + (int) $_POST['secondes'];
+                    $idTrack = $repo->ajoutPiste($titre, 'audio/' . $nomFichier, $duree);
+                    $repo->ajoutPisteAPlaylist($_SESSION['id_playlist'], $idTrack);
+                }
             } else {
                 return 'Le fichier doit être au format mp3';
             }
@@ -39,7 +56,16 @@ class AjoutTrackAction extends Action
             }
 
             $html = (new AudioListRenderer($pl))->render(Renderer::COMPACT);
-            $html .= '<a href="?action=add-track">Ajouter encore une piste</a>';
+            $html .= <<<HTML
+                <style>
+                    a{
+                        color: white;
+                        text-decoration: none;
+                        font-family: monospace, sans-serif;
+                    }
+                </style>
+                <a href="?action=add-track"><p>Ajouter une piste</p></a>
+            HTML;
 
             return $html;
         }

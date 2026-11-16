@@ -39,13 +39,18 @@ class DefaultAction extends Action
                         align-items: center;
                         justify-content: center;
                     }
+
+                    .playlist p {
+                        font-family: monospace, sans-serif;
+                        border: 1px solid #6820dc;
+                    }
                 </style>
             </head>
             
             <body>
                 <h2>Bienvenue sur Deefy</h2>
                 <div class='playlist'>
-                    <p><a href='?action=playlist_courante'><h3>Afficher la playlist courante</h3></a></p>
+                    <p><a href='?action=playlist_courante'>Afficher la playlist courante</a></p>
                 </div>
         HTML;
 

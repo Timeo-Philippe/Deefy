@@ -105,7 +105,7 @@ class DeefyRepository
      */
     public function afficher_playlist(int $id): ?Playlist
     {
-        $query = "SELECT p.id, p.nom, t.*
+        $query = "SELECT p.id, p.nom, t.id as id_track, t.titre, t.filename, t.duree
                   FROM playlist p
                   LEFT JOIN playlist2track p2t on p.id = p2t.id_pl
                   LEFT JOIN track t on p2t.id_track = t.id
@@ -121,7 +121,7 @@ class DeefyRepository
                 $pl = new Playlist($row['nom']);
             }
 
-            if ($row['id'] !== null) {
+            if ($row['id_track'] !== null) {
                 $track = new AudioTrack($row['titre'], $row['filename'], (int)$row['duree']);
                 $pl->ajoutPiste($track);
             }

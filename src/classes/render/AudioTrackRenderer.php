@@ -29,25 +29,29 @@ class AudioTrackRenderer implements Renderer
 
     public function renderCompact(): string
     {
+        $titre = htmlspecialchars($this->track->titre, ENT_QUOTES, 'UTF-8');
         return '<div class="track-compact">'
-            . '<h3>' . $this->track->titre . '</h3>'
+            . '<h3>' . $titre . '</h3>'
             . $this->renderAudio()
             . '</div>';
     }
 
     public function renderLong(): string
     {
+        $titre = htmlspecialchars($this->track->titre, ENT_QUOTES, 'UTF-8');
+        $auteur = htmlspecialchars($this->track->auteur, ENT_QUOTES, 'UTF-8');
         return '<div class="track-long">'
-            . '<h2>' . $this->track->titre . '</h2>'
-            . '<p>Author: ' . $this->track->auteur . '</p>'
+            . '<h2>' . $titre . '</h2>'
+            . '<p>Author: ' . $auteur . '</p>'
             . $this->renderAudio()
             . '</div>';
     }
 
     public function renderAudio(): string
     {
+        $nomFichierAudio = htmlspecialchars($this->track->nomFichierAudio, ENT_QUOTES, 'UTF-8');
         return '<audio controls>'
-            . '<source src="' . $this->track->nomFichierAudio . '" type="audio/mpeg">'
+            . '<source src="' . $nomFichierAudio . '" type="audio/mpeg">'
             . 'Your browser does not support the audio element.'
             . '</audio>';
     }

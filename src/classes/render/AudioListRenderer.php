@@ -4,6 +4,7 @@ namespace iutnc\deefy\render;
 
 use iutnc\deefy\audio\lists\AudioList;
 use iutnc\deefy\interface\Renderer;
+use iutnc\deefy\render\AudioTrackRenderer;
 
 class AudioListRenderer implements Renderer
 {
@@ -16,7 +17,7 @@ class AudioListRenderer implements Renderer
 
     public function render(int $selector = Renderer::COMPACT): string
     {
-        $name = ($this->audioList->nom);
+        $name = htmlspecialchars($this->audioList->nom, ENT_QUOTES, 'UTF-8');
         $html = '<section class="audio-list">'
             . '<h1>' . $name . '</h1>';
 

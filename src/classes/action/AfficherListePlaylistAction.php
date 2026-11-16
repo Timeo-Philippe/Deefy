@@ -30,7 +30,6 @@ class AfficherListePlaylistAction extends Action
                  .playlist p {
                     font-family: monospace, sans-serif;
                     border: 1px solid #6820dc;
-                    font-family: monospace, sans-serif;
                  }
 
                  .playlist a {
@@ -47,11 +46,11 @@ class AfficherListePlaylistAction extends Action
         foreach ($playlist as $p) {
             $pl = $p['playlist'];
             $id = $p['id'];
-            $nom = $pl->nom;
+            $nom = htmlspecialchars($pl->nom, ENT_QUOTES, 'UTF-8');
 
             $html .= <<<HTML
                 <a href="index.php?action=afficher_playlist&id=$id">
-                    <p> "Playlist : $nom" </p>
+                    <p> Playlist : $nom </p>
                 </a>
             HTML;
         }

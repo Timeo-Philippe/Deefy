@@ -40,8 +40,7 @@ class Dispatcher
             <head>
                 <meta charset="UTF-8">
                 <title>Deefy</title>
-            </head>
-            <style>
+                <style>
                 body {
                   margin: 0;
                   padding: 0;
@@ -87,6 +86,7 @@ class Dispatcher
                 text-align: center;
                 }
             </style>
+            </head>
             <body>
                 <ul class='navbar'>
                     <h1>Deefy</h1>
