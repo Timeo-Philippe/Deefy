@@ -15,7 +15,7 @@ abstract class AudioList
         $this->trackList = $initialTrackList;
         $this->nbPiste = count($initialTrackList);
         $this->dureeT = 0;
-        
+
         foreach ($initialTrackList as $track) {
             $this->dureeT += $track->duree;
         }

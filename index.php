@@ -9,6 +9,7 @@ use iutnc\deefy\action\AfficherListePlaylistAction;
 use iutnc\deefy\action\AfficherPlaylist;
 use iutnc\deefy\action\AjoutPlaylistAction;
 use iutnc\deefy\action\AjoutTrackAction;
+use iutnc\deefy\action\AfficherPlaylistCourante;
 
 session_start();
 DeefyRepository::setConfig('Config.db.ini');
@@ -19,7 +20,7 @@ $dispatcher->addRoute('afficher_liste_Playlist', AfficherListePlaylistAction::cl
 $dispatcher->addRoute('afficher_playlist', AfficherPlaylist::class);
 $dispatcher->addRoute('add-track', AjoutTrackAction::class);
 $dispatcher->addRoute('add-playlist', AjoutPlaylistAction::class);
-// $dispatcher->addRoute('add-user', 'iutnc\deefy\action\AddUserAction');
+$dispatcher->addRoute('playlist_courante', AfficherPlaylistCourante::class);
 
 try {
     $dispatcher->run();

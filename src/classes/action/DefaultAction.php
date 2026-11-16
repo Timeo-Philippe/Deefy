@@ -26,11 +26,27 @@ class DefaultAction extends Action
                         color: white;
                         font-family: monospace, sans-serif;
                     }
+
+                    .playlist a {
+                        color: white;
+                        text-decoration: none;
+                        font-family: monospace, sans-serif;
+                        margin-right: 10px;
+                    }
+
+                    .playlist {
+                        display: grid;
+                        align-items: center;
+                        justify-content: center;
+                    }
                 </style>
             </head>
             
             <body>
                 <h2>Bienvenue sur Deefy</h2>
+                <div class='playlist'>
+                    <p><a href='?action=playlist_courante'><h3>Afficher la playlist courante</h3></a></p>
+                </div>
         HTML;
 
         return $page;

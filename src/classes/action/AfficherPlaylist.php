@@ -10,14 +10,14 @@ use iutnc\deefy\render\AudioListRenderer;
 class AfficherPlaylist extends Action
 {
 
-    public function execute(): string 
+    public function execute(): string
     {
         $id = (int) $_GET['id'];
 
         $repo = DeefyRepository::getInstance();
         $pl = $repo->afficher_playlist($id);
 
-        if ($pl === null){
+        if ($pl === null) {
             return "Cette playlist est introuvable";
         }
 
@@ -36,8 +36,7 @@ class AfficherPlaylist extends Action
                     }
                 </style>
                 <a href="?action=add-track"><p>Ajouter une piste</p></a>
-        HTML
-        ;
+        HTML;
 
         return $html;
     }

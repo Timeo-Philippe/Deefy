@@ -90,10 +90,9 @@ class Dispatcher
             <body>
                 <ul class='navbar'>
                     <h1>Deefy</h1>
-                    <li><a href='?action=default'>Accueil</a></li>
-                    <li><a href="?action=afficher_liste_Playlist">Afficher les playlist</a></li>
-                    <li><a href="?action=add-user">Inscription</a></li>
-                    <li><a href="?action=add-playlist">Ajouter une playlist</a></li>
+                    <li><a href='?action=default'><h3>Accueil</h3></a></li>
+                    <li><a href="?action=afficher_liste_Playlist"><h3>Afficher les playlist</h3></a></li>
+                    <li><a href="?action=add-playlist"><h3>Ajouter une playlist</h3></a></li>
                 </ul>
         HTML;
 
