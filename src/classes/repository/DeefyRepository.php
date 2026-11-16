@@ -107,8 +107,8 @@ class DeefyRepository
     {
         $query = "SELECT p.id, p.nom, t.*
                   FROM playlist p
-                  INNER JOIN playlist2track p2t on p.id = p2t.id_pl
-                  INNER JOIN track t on p2t.id_track = t.id
+                  LEFT JOIN playlist2track p2t on p.id = p2t.id_pl
+                  LEFT JOIN track t on p2t.id_track = t.id
                   WHERE p.id = ?
                   ORDER BY p2t.no_piste_dans_liste";
         $stmt = $this->getPDO()->prepare($query);
@@ -121,8 +121,10 @@ class DeefyRepository
                 $pl = new Playlist($row['nom']);
             }
 
-            $track = new AudioTrack($row['titre'], $row['filename'], (int)$row['duree']);
-            $pl->ajoutPiste($track);
+            if ($row['id'] !== null) {
+                $track = new AudioTrack($row['titre'], $row['filename'], (int)$row['duree']);
+                $pl->ajoutPiste($track);
+            }
         }
 
         return $pl;
@@ -133,7 +135,7 @@ class DeefyRepository
      * un formulaire est affiché pour saisir les données de la piste. 
      * Cette fonctionnalité est accessible dans l’affichage d’une playlist.
      */
-    public function ajoutPiste(string $nom, string $filename, int $duree) : int
+    public function ajoutPiste(string $nom, string $filename, int $duree): int
     {
         $query = "INSERT INTO track (titre, filename, duree) values (?, ?, ?)";
         $stmt = $this->getPDO()->prepare($query);
@@ -144,7 +146,7 @@ class DeefyRepository
         return (int) $this->getPDO()->lastInsertId();
     }
 
-    public function ajoutPisteAPlaylist(int $idP, int $idT) : void
+    public function ajoutPisteAPlaylist(int $idP, int $idT): void
     {
         $query = "SELECT MAX(no_piste_dans_liste)
                   FROM playlist2track
@@ -153,7 +155,7 @@ class DeefyRepository
         $stmt->bindParam(1, $idP, PDO::PARAM_INT);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($row['MAX(no_piste_dans_liste)'] === null){
+        if ($row['MAX(no_piste_dans_liste)'] === null) {
             $max = 1;
         } else {
             $max = (int)$row['MAX(no_piste_dans_liste)'] + 1;
@@ -165,5 +167,20 @@ class DeefyRepository
         $stmt->bindParam(2, $idT, PDO::PARAM_INT);
         $stmt->bindParam(3, $max, PDO::PARAM_INT);
         $stmt->execute();
+    }
+
+    /**
+     * Fonctionnalité 4 : créer une playlist vide : un formulaire permettant de saisir le nom 
+     * d’une nouvelle playlist est affiché. A la validation, la playlist est créée et stockée 
+     * en BD ; elle devient la playlist courante.
+     */
+    public function ajoutPlaylist(string $nom): int
+    {
+        $query = "INSERT INTO playlist (nom) values (?)";
+
+        $stmt = $this->getPDO()->prepare($query);
+        $stmt->bindParam(1, $nom, PDO::PARAM_STR);
+        $stmt->execute();
+        return (int) $this->getPDO()->lastInsertId();
     }
 }
