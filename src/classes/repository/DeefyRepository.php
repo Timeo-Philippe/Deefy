@@ -125,7 +125,45 @@ class DeefyRepository
             $pl->ajoutPiste($track);
         }
 
-
         return $pl;
+    }
+
+    /**
+     * Fonctionnalité 3 : Ajouter une piste : ajoute une nouvelle piste à la playlist courante ; 
+     * un formulaire est affiché pour saisir les données de la piste. 
+     * Cette fonctionnalité est accessible dans l’affichage d’une playlist.
+     */
+    public function ajoutPiste(string $nom, string $filename, int $duree) : int
+    {
+        $query = "INSERT INTO track (titre, filename, duree) values (?, ?, ?)";
+        $stmt = $this->getPDO()->prepare($query);
+        $stmt->bindParam(1, $nom, PDO::PARAM_STR);
+        $stmt->bindParam(2, $filename, PDO::PARAM_STR);
+        $stmt->bindParam(3, $duree, PDO::PARAM_INT);
+        $stmt->execute();
+        return (int) $this->getPDO()->lastInsertId();
+    }
+
+    public function ajoutPisteAPlaylist(int $idP, int $idT) : void
+    {
+        $query = "SELECT MAX(no_piste_dans_liste)
+                  FROM playlist2track
+                  WHERE id_pl = ? ";
+        $stmt = $this->getPDO()->prepare($query);
+        $stmt->bindParam(1, $idP, PDO::PARAM_INT);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($row['MAX(no_piste_dans_liste)'] === null){
+            $max = 1;
+        } else {
+            $max = (int)$row['MAX(no_piste_dans_liste)'] + 1;
+        }
+
+        $query = "INSERT INTO playlist2track (id_pl, id_track, no_piste_dans_liste) values (?, ?, ?)";
+        $stmt = $this->getPDO()->prepare($query);
+        $stmt->bindParam(1, $idP, PDO::PARAM_INT);
+        $stmt->bindParam(2, $idT, PDO::PARAM_INT);
+        $stmt->bindParam(3, $max, PDO::PARAM_INT);
+        $stmt->execute();
     }
 }

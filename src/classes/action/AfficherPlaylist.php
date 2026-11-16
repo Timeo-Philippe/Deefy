@@ -22,8 +22,22 @@ class AfficherPlaylist extends Action
         }
 
         $_SESSION['playlist'] = serialize($pl);
+        $_SESSION['id_playlist'] = $id;
 
         $html = (new AudioListRenderer($pl))->render(Renderer::COMPACT);
+
+        $html .= <<<HTML
+                <style>
+                    a, p {
+                        color: white;
+                        text-decoration: none;
+                        font-family: monospace, sans-serif;
+                        margin-right: 10px;
+                    }
+                </style>
+                <a href="?action=add-track"><p>Ajouter une piste</p></a>
+        HTML
+        ;
 
         return $html;
     }

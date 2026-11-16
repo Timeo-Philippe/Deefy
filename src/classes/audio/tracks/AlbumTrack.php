@@ -7,9 +7,9 @@ class AlbumTrack extends AudioTrack
     private string $album;
     private int $numero;
 
-    public function __construct(string $titre, string $cheminFichier, string $album, int $numPiste)
+    public function __construct(string $titre, string $cheminFichier, string $album, int $numPiste, int $duree)
     {
-        parent::__construct($titre, $cheminFichier);
+        parent::__construct($titre, $cheminFichier, $duree);
         $this->album = $album;
         $this->numero = $numPiste;
     }
