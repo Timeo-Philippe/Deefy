@@ -1,2 +1,4 @@
 vendor/
 *.ini
+.htaccess
+sql/
